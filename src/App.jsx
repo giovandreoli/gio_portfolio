@@ -1,57 +1,35 @@
-import Desktop from "./components/Desktop"
-import Taskbar from "./components/Taskbar"
-import StartMenu from "./components/StartMenu"
-import Window from "./components/Window"
-import ProjectsExplorer from "./components/ProjectsExplorer"
-import useBootSound from "./hooks/useBootSound"
-import { useWindows } from "./context/WindowContext"
-import MyComputer from "./components/MyComputer"
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-export default function App() {
-  useBootSound()
-  const { windows } = useWindows()
-  const isMobile = window.innerWidth < 768
-
-    {windows.computer.open && !windows.computer.minimized && (
-      <Window title="Meu Computador" name="computer">
-        <MyComputer />
-      </Window>
-    )}
-
-    {isMobile && (
-    <div className="mobile-hint">
-        💻 Melhor experiência no desktop
-    </div>
-    )}
+function App() {
+  const [count, setCount] = useState(0)
 
   return (
     <>
-      <Desktop />
-
-      {windows.about.open && !windows.about.minimized && (
-        <Window title="Sobre Mim" name="about">
-          <h2>Giovanna Andreoli</h2>
-          <p>Desenvolvedora Fullstack</p>
-          <p>HTML, CSS, JavaScript, React, Python, Flask, SQL</p>
-        </Window>
-      )}
-
-      {windows.projects.open && !windows.projects.minimized && (
-        <Window title="Meus Projetos" name="projects">
-          <ProjectsExplorer />
-        </Window>
-      )}
-
-      {windows.contact.open && !windows.contact.minimized && (
-        <Window title="Contato" name="contact">
-          <p>Email: giovanna@email.com</p>
-          <p>GitHub: github.com/giovanna</p>
-          <p>LinkedIn: linkedin.com/in/giovanna</p>
-        </Window>
-      )}
-
-      <StartMenu />
-      <Taskbar />
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
   )
 }
+
+export default App
