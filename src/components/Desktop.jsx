@@ -19,6 +19,11 @@ export default function Desktop() {
         <img src="https://cdn-icons-png.flaticon.com/512/906/906864.png" />
         <span>Contato</span>
       </div>
+
+      <div className="icon" onClick={() => openWindow("computer")}>
+        <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" />
+        <span>Meu Computador</span>
+      </div>
     </div>
   )
 }

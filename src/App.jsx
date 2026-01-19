@@ -5,11 +5,18 @@ import Window from "./components/Window"
 import ProjectsExplorer from "./components/ProjectsExplorer"
 import useBootSound from "./hooks/useBootSound"
 import { useWindows } from "./context/WindowContext"
+import MyComputer from "./components/MyComputer"
 
 export default function App() {
   useBootSound()
   const { windows } = useWindows()
   const isMobile = window.innerWidth < 768
+
+    {windows.computer.open && !windows.computer.minimized && (
+      <Window title="Meu Computador" name="computer">
+        <MyComputer />
+      </Window>
+    )}
 
     {isMobile && (
     <div className="mobile-hint">

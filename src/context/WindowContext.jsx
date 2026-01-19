@@ -7,6 +7,7 @@ export function WindowProvider({ children }) {
     about: { open: false, minimized: false },
     projects: { open: false, minimized: false },
     contact: { open: false, minimized: false },
+    computer: { open: false, minimized: false },
   })
 
   function openWindow(name) {
