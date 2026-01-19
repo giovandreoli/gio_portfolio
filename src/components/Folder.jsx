@@ -3,7 +3,7 @@ export default function Folder({ name, onOpen }) {
     <div className="folder" onClick={onOpen}>
       <img
         src="https://cdn-icons-png.flaticon.com/512/716/716784.png"
-        alt="Pasta"
+        alt={name}
       />
       <span>{name}</span>
     </div>

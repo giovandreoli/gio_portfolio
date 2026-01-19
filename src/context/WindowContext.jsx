@@ -1,58 +1,32 @@
 import { createContext, useContext, useState } from "react"
 
-const WindowContext = createContext()
+const WindowContext = createContext(null)
 
 export function WindowProvider({ children }) {
   const [windows, setWindows] = useState({
-    about: { open: false, minimized: false },
-    projects: { open: false, minimized: false },
-    contact: { open: false, minimized: false },
-    computer: { open: false, minimized: false },
+    computer: false,
+    projects: false,
   })
 
   function openWindow(name) {
-    setWindows(prev => ({
-      ...prev,
-      [name]: { open: true, minimized: false }
-    }))
+    setWindows(prev => ({ ...prev, [name]: true }))
   }
 
   function closeWindow(name) {
-    setWindows(prev => ({
-      ...prev,
-      [name]: { open: false, minimized: false }
-    }))
-  }
-
-  function minimizeWindow(name) {
-    setWindows(prev => ({
-      ...prev,
-      [name]: { ...prev[name], minimized: true }
-    }))
-  }
-
-  function restoreWindow(name) {
-    setWindows(prev => ({
-      ...prev,
-      [name]: { open: true, minimized: false }
-    }))
+    setWindows(prev => ({ ...prev, [name]: false }))
   }
 
   return (
-    <WindowContext.Provider
-      value={{
-        windows,
-        openWindow,
-        closeWindow,
-        minimizeWindow,
-        restoreWindow
-      }}
-    >
+    <WindowContext.Provider value={{ windows, openWindow, closeWindow }}>
       {children}
     </WindowContext.Provider>
   )
 }
 
 export function useWindows() {
-  return useContext(WindowContext)
+  const context = useContext(WindowContext)
+  if (!context) {
+    throw new Error("useWindows must be used within WindowProvider")
+  }
+  return context
 }
