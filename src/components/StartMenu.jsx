@@ -1,28 +1,67 @@
-import { useState } from "react"
+import { useStartMenu } from "../context/StartMenuContext"
 import { useWindows } from "../context/WindowContext"
+import { useSound } from "../context/SoundContext"
 
 export default function StartMenu() {
-  const [open, setOpen] = useState(false)
+  const { open, closeStart } = useStartMenu()
   const { openWindow } = useWindows()
+  const { playClick } = useSound()
 
-  function handleOpen(name) {
-    openWindow(name)
-    setOpen(false)
+  if (!open) return null
+
+  function openProgram(win) {
+    playClick()
+    openWindow(win)
+    closeStart()
+  }
+
+  function shutdown() {
+    playClick()
+    closeStart()
+    setTimeout(() => {
+      window.location.reload()
+    }, 300)
   }
 
   return (
-    <>
-      <button id="start-btn" onClick={() => setOpen(!open)}>
-        Iniciar
-      </button>
+    <div id="start-menu">
+      <div className="start-header">
+        <img
+          src="https://i.imgur.com/0y8Ftya.png"
+          alt="user"
+        />
+        <span>Giovanna</span>
+      </div>
 
-      {open && (
-        <div id="start-menu">
-          <p onClick={() => handleOpen("about")}>Sobre Mim</p>
-          <p onClick={() => handleOpen("projects")}>Projetos</p>
-          <p onClick={() => handleOpen("contact")}>Contato</p>
-        </div>
-      )}
-    </>
+      <div className="start-body">
+        <p
+          onClick={() =>
+            openProgram({
+              id: "computer",
+              title: "Meu Computador",
+              content: <p>Skills, tecnologias e experiências</p>,
+            })
+          }
+        >
+          Meu Computador
+        </p>
+
+        <p
+          onClick={() =>
+            openProgram({
+              id: "projects",
+              title: "Projetos",
+              content: <p>Projetos fullstack</p>,
+            })
+          }
+        >
+          Projetos
+        </p>
+      </div>
+
+      <div className="start-footer">
+        <button onClick={shutdown}>Desligar</button>
+      </div>
+    </div>
   )
 }

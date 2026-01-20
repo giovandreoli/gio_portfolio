@@ -250,3 +250,80 @@ button:active {
   padding-left: 20px;
 }
 
+#start-menu {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  width: 260px;
+  background: #ece9d8;
+  border: 2px solid #245edb;
+  z-index: 9999;
+}
+
+.start-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(#245edb, #1a4fa3);
+  color: white;
+  padding: 10px;
+}
+
+.start-header img {
+  width: 40px;
+  border-radius: 4px;
+}
+
+.start-body p {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.start-body p:hover {
+  background: #316ac5;
+  color: white;
+}
+
+.start-footer {
+  padding: 10px;
+  text-align: right;
+}
+
+#desktop {
+  width: 100vw;
+  height: 100vh;
+  background: url("/xp-wallpaper.jpg") center / cover;
+  padding: 20px;
+  user-select: none;
+}
+
+.icon {
+  width: 90px;
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+  cursor: default;
+}
+
+.icon img {
+  width: 48px;
+  height: 48px;
+}
+
+.icon span {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  text-shadow: 1px 1px 2px black;
+}
+
+/* seleção estilo XP */
+.icon:active span {
+  background: #0a246a;
+  border: 1px dotted white;
+}
+
+.icon.selected {
+  background: rgba(0, 120, 215, 0.3);
+  border: 1px dotted white;
+}

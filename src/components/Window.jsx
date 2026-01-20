@@ -1,50 +1,43 @@
-import { useState } from "react"
 import { useWindows } from "../context/WindowContext"
 
-export default function Window({ title, name, children }) {
-  const { closeWindow, minimizeWindow } = useWindows()
-  const [position, setPosition] = useState({ x: 120, y: 120 })
-  const [dragging, setDragging] = useState(false)
-  const [offset, setOffset] = useState({ x: 0, y: 0 })
+export default function Window({ name, title, children }) {
+  const {
+    windows,
+    closeWindow,
+    minimizeWindow,
+    maximizeWindow,
+    restoreWindow
+  } = useWindows()
 
-  function handleMouseDown(e) {
-    setDragging(true)
-    setOffset({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y
-    })
-  }
-
-  function handleMouseMove(e) {
-    if (!dragging) return
-    setPosition({
-      x: e.clientX - offset.x,
-      y: e.clientY - offset.y
-    })
-  }
-
-  function handleMouseUp() {
-    setDragging(false)
-  }
+  const win = windows[name]
+  if (!win || win.state === "minimized") return null
 
   return (
     <div
-      className="window"
-      style={{ top: position.y, left: position.x }}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      className={`window ${win.state}`}
+      style={{
+        top: win.y,
+        left: win.x,
+        width: win.width,
+        height: win.height
+      }}
     >
-      <div className="title-bar" onMouseDown={handleMouseDown}>
+      <div className="title-bar">
         <span>{title}</span>
-        <div>
+        <div className="buttons">
           <button onClick={() => minimizeWindow(name)}>_</button>
+
+          {win.state === "maximized" ? (
+            <button onClick={() => restoreWindow(name)}>🗗</button>
+          ) : (
+            <button onClick={() => maximizeWindow(name)}>▢</button>
+          )}
+
           <button onClick={() => closeWindow(name)}>X</button>
         </div>
       </div>
 
-      <div className="window-content">
-        {children}
-      </div>
+      <div className="window-content">{children}</div>
     </div>
   )
 }

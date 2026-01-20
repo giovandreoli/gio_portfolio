@@ -1,29 +1,27 @@
 import Desktop from "./components/Desktop"
-import Window from "./components/Window"
+import Taskbar from "./components/Taskbar"
+import StartMenu from "./components/StartMenu"
+import WindowsLayer from "./components/WindowsLayer"
+import BootSound from "./components/BootSound"
 
-import MyComputer from "./components/MyComputer"
-import ProjectsExplorer from "./components/ProjectsExplorer"
+import { WindowProvider } from "./context/WindowContext"
+import { StartMenuProvider } from "./context/StartMenuContext"
+import { SoundProvider } from "./context/SoundContext"
 
-import { useWindows } from "./context/WindowContext.jsx"
+import "./style.css"
 
 export default function App() {
-  const { windows } = useWindows()
-
   return (
-    <>
-      <Desktop />
-
-      {windows.computer && (
-        <Window title="Meu Computador" windowId="computer">
-          <MyComputer />
-        </Window>
-      )}
-
-      {windows.projects && (
-        <Window title="Projetos" windowId="projects">
-          <ProjectsExplorer />
-        </Window>
-      )}
-    </>
+    <SoundProvider>
+      <WindowProvider>
+        <StartMenuProvider>
+          <BootSound />
+          <Desktop />
+          <WindowsLayer />
+          <StartMenu />
+          <Taskbar />
+        </StartMenuProvider>
+      </WindowProvider>
+    </SoundProvider>
   )
 }
